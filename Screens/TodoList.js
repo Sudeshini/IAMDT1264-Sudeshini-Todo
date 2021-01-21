@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import ICONS from "@Assets/icon";
 import { useFonts } from "expo-font";
+import Button from "@Components/Button";
 
 const TodoList = () => {
   let [fontsLoaded] = useFonts({
@@ -23,10 +24,10 @@ const TodoList = () => {
   ]);
 
   const handleDelete = (item) => {
-    console.log('item',item)
-    item.value = true
-    taskList.push(item)
-    setTaskList(taskList)
+    console.log("item", item);
+    item.value = true;
+    taskList.push(item);
+    setTaskList(taskList);
   };
 
   return (
@@ -43,7 +44,7 @@ const TodoList = () => {
           autoComplete="off"
           autoCapitalize="none"
           autoCorrect={false}
-          keyboardType={""}
+          keyboardType={"ascii-capable"}
           editable={true}
         />
       </View>
@@ -71,9 +72,7 @@ const TodoList = () => {
             ))}
         </ScrollView>
       </View>
-      <TouchableOpacity style={styles.buttonStyle}>
-        <Text style={styles.buttonText}>Add New Task</Text>
-      </TouchableOpacity>
+      <Button lable={"Add New Task"} onPress={() => {}}></Button>
     </View>
   );
 };
@@ -81,6 +80,8 @@ const TodoList = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginHorizontal: 20,
+    marginVertical: 10,
   },
   titleText: {
     fontFamily: "Inter-Regular",
@@ -115,33 +116,17 @@ const styles = StyleSheet.create({
     lineHeight: 18,
     color: "#000000",
   },
-  buttonStyle: {
-    backgroundColor: "#E77E38",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 18,
-  },
-  buttonText: {
-    fontFamily: "Inter-Regular",
-    marginVertical: 18,
-    fontSize: 20,
-    fontWeight: "700",
-    color: "#FFFFFF",
-  },
   textInputWrap: {
-    flexDirection: "row",
     backgroundColor: "#FFFFFF",
-    borderColor: "#939393",
-    borderRadius: 8,
-    borderWidth: 1,
+    borderRadius: 4,
     marginVertical: 30,
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 1,
     },
-    shadowOpacity: 0.2,
-    shadowRadius: 3.84,
-    elevation: 5,
+    shadowOpacity: 0.1,
+    shadowRadius: 0.1,
+    elevation: 4,
   },
   input: {
     height: 48,
