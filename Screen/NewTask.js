@@ -3,10 +3,21 @@ import { StyleSheet, View, Text, TextInput } from "react-native";
 import Button from "@Components/Button";
 import { useFonts } from "expo-font";
 
-const NewTask = () => {
+const NewTask = (props) => {
+  const [lable, setLable] = useState("");
+  const [detail, setDetail] = useState("");
+
   let [fontsLoaded] = useFonts({
     "Inter-Regular": require("../assets/Fonts/Inter-Regular.ttf"),
   });
+
+  const handleNavigation = () => {
+    if (lable) {
+      let data = { lable: lable };
+      props.route.params.handleAddTask(data);
+      props.navigation.goBack();
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -25,6 +36,8 @@ const NewTask = () => {
           keyboardType={"ascii-capable"}
           underlineColorAndroid="transparent"
           editable={true}
+          value={lable}
+          onChangeText={setLable}
         />
       </View>
       <View style={styles.textInputWrap}>
@@ -43,9 +56,11 @@ const NewTask = () => {
           underlineColorAndroid="transparent"
           keyboardType={"ascii-capable"}
           editable={true}
+          value={detail}
+          onChangeText={setDetail}
         />
       </View>
-      <Button lable={"Create"} onPress={() => {}}></Button>
+      <Button lable={"Create"} onPress={handleNavigation}></Button>
     </View>
   );
 };

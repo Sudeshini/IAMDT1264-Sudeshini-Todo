@@ -1,8 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StatusBar, StyleSheet, View, Text } from "react-native";
 import { useFonts } from "expo-font";
 
 const Splash = (props) => {
+  useEffect(() => {
+    setInterval(() => {
+      props.navigation.isFocused() && props.navigation.navigate("TodoList");
+    }, 3000);
+  });
+
   let [fontsLoaded] = useFonts({
     "Inter-Regular": require("../assets/Fonts/Inter-Regular.ttf"),
   });

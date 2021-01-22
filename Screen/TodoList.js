@@ -3,6 +3,7 @@ import {
   StyleSheet,
   View,
   ScrollView,
+  StatusBar,
   TouchableOpacity,
   Image,
   Text,
@@ -12,7 +13,7 @@ import ICONS from "@Assets/icon";
 import { useFonts } from "expo-font";
 import Button from "@Components/Button";
 
-const TodoList = () => {
+const TodoList = (props) => {
   let [fontsLoaded] = useFonts({
     "Inter-Regular": require("../assets/Fonts/Inter-Regular.ttf"),
   });
@@ -24,14 +25,34 @@ const TodoList = () => {
   ]);
 
   const handleDelete = (item) => {
-    console.log("item", item);
-    item.value = true;
-    taskList.push(item);
-    setTaskList(taskList);
+    // loop over the todos list and find the provided id.
+    let updatedList = taskList.map((task) => {
+      if (task.id == item.id) {
+        return { ...task, value: !task.value }; //gets everything that was already in item, and updates "done"
+      }
+      return task; // else return unmodified item
+    });
+    setTaskList(updatedList); // set state to new object with updated list
+  };
+
+  const handleNavigation = () => {
+    props.navigation.navigate("NewTask", { handleAddTask: handleAddTask });
+  };
+
+  const handleAddTask = (data) => {
+    setTaskList((state) => [
+      ...state,
+      {
+        id: taskList.length + 1,
+        lable: data.lable,
+        value: false,
+      },
+    ]);
   };
 
   return (
     <View style={styles.container}>
+      <StatusBar backgroundColor={"#000000"} barStyle="light-content" />
       <Text style={styles.titleText}>Todo App</Text>
       <View style={styles.textInputWrap}>
         <TextInput
@@ -72,7 +93,7 @@ const TodoList = () => {
             ))}
         </ScrollView>
       </View>
-      <Button lable={"Add New Task"} onPress={() => {}}></Button>
+      <Button lable={"Add New Task"} onPress={handleNavigation}></Button>
     </View>
   );
 };
